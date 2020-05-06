@@ -1,0 +1,128 @@
+{
+    "vertices" : [
+        {
+            "codigo":"1",
+            "nombre":"n1",
+            "tipo":"vertice"
+        },
+        {
+            "codigo":"2",
+            "nombre":"n2",
+            "tipo":"vertice"
+        },
+        {
+            "codigo":"3",
+            "nombre":"n3",
+            "tipo":"vertice"
+        },
+        {
+            "codigo":"4",
+            "nombre":"n4",
+            "tipo":"vertice"
+        }
+    ],
+
+    "aristas":[
+        {
+            "vertice":"1",
+            "lista":[
+                {
+                    "verticeConectado" : "2",
+                    "costo":5,
+                    "concurrencia":10,
+                    "sentidoCardinal":3,
+                    "direccionVectorial":0,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                },
+                {
+                    "verticeConectado" : "3",
+                    "costo":14,
+                    "concurrencia":37,
+                    "sentidoCardinal":-1,
+                    "direccionVectorial":1,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                },
+                {
+                    "verticeConectado" : "1",
+                    "costo":22,
+                    "concurrencia":16,
+                    "sentidoCardinal":0,
+                    "direccionVectorial":1,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                }
+            ]
+        },
+        {
+            "vertice":"2",
+            "lista":[
+                {
+                    "verticeConectado" : "1",
+                    "costo":5,
+                    "concurrencia":10,
+                    "sentidoCardinal":3,
+                    "direccionVectorial":0,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                },
+                {
+                    "verticeConectado" : "3",
+                    "costo":4,
+                    "concurrencia":35,
+                    "sentidoCardinal":-2,
+                    "direccionVectorial":1,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                },
+                {
+                    "verticeConectado" : "4",
+                    "costo":37,
+                    "concurrencia":12,
+                    "sentidoCardinal":1,
+                    "direccionVectorial":0,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                }
+            ]
+        },
+        {
+            "vertice":"3",
+            "lista":[
+                {
+                    "verticeConectado" : "1",
+                    "costo":14,
+                    "concurrencia":37,
+                    "sentidoCardinal":-1,
+                    "direccionVectorial":-1,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                },
+                {
+                    "verticeConectado" : "2",
+                    "costo":4,
+                    "concurrencia":35,
+                    "sentidoCardinal":2,
+                    "direccionVectorial":-1,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                }
+            ]
+        },
+        {
+            "vertice":"4",
+            "lista":[
+                {
+                    "verticeConectado" : "2",
+                    "costo":37,
+                    "concurrencia":12,
+                    "sentidoCardinal":0,
+                    "direccionVectorial":0,
+                    "estaCerrado":false,
+                    "numeroDeArista":1
+                }
+            ]
+        }
+    ]
+}
