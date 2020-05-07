@@ -1,5 +1,7 @@
+RUTA_RAIZ = "D:/Proyectos/Dronmicilios.py/"#path del directorio de origen.Mantenga el nombre del directorio plis.
+
 import json,sys
-sys.path.append("D:/Proyectos/Parcial - 2Corte/")
+sys.path.append( RUTA_RAIZ)
 from model.base import *
 from model.comparadoresDeVertices import *
 from model.buscadoresDeAristas import *
@@ -12,7 +14,7 @@ def __main__():
 #funciones para abstraer datos Json a Objetos
 def cargarVerticesEnMemoria():
     #with open("D:/Proyectos/ProyectoIn7egrador/test/graphStage1.json") as json_file:
-    documento = importarArchivo( "D:/Proyectos/Parcial - 2Corte/test/graphStage1.json")
+    documento = importarArchivo( RUTA_RAIZ+"/graphStage1.json")
     datosJson = importarJsonDesdeArchivo( documento)
     vertices = importarVerticesDesdeJson(datosJson)
     importarAristasDesdeJson( datosJson, vertices)

@@ -1,12 +1,21 @@
+#region status values
+NO_VISITADO=0
+PARCIALMENTE_VISITADO=2
+TOTALMENTE_VISITADO = 1
+#endregion
 class Vertice:
     __codigo:str
     __nombre: str
     __listaDeAristas: list
 
+    estado:int
+
     def __init__(self, codigoInicial = "", nombreInicial = ""):
         self.__codigo = codigoInicial
         self.__nombre = nombreInicial
-        self.__listaDeAristas = [] 
+        self.__listaDeAristas = []
+
+        self.estado = NO_VISITADO
 
     """
         definimos getCodigo ( de un vertice) para:
@@ -34,6 +43,9 @@ class Vertice:
     
     def setListaDeAristas( self, nuevaListaDeAristas:list):
         self.__listaDeAristas = nuevaListaDeAristas
+    
+    def añadirArista(self, nuevaArista):
+        self.__listaDeAristas.append( nuevaArista)
 
 class Arista:
     __verticeConectado: Vertice
@@ -48,7 +60,7 @@ class Arista:
     def getVerticeConectado( self):
         return self.__verticeConectado
 
-    def getCostos( self):
+    def getCosto( self):
         return self.__costo
     
     def getNumeroDeArista( self):
@@ -69,18 +81,21 @@ class Grafo:
     def __init__(self):
         self.__vertices={}
     
-    def getListaDeVertices(self):
-        return self.vertices
+    def getVertices(self):
+        return self.__vertices
 
-    def getVertice(self, palabraClave:str):
+    def getVertice(self, palabraClave:int):
         return self.__vertices[palabraClave]
 
-    def setListaDeVertices(self, nuevosVertices:dict):
+    def setVertices(self, nuevosVertices:dict):
         self.__vertices = nuevosVertices
     
     def añadirVertice(self, nuevoVertice:Vertice):
         palabraClave = nuevoVertice.getCodigo
         self.__vertices[palabraClave] = nuevoVertice
     
-    def quitarVertice(self, palabraClave:str):
+    def quitarVertice(self, palabraClave:int):
         self.__vertices.pop(palabraClave)
+    
+    def contarVertices(self):
+        return len(self.__vertices)
