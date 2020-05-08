@@ -3,57 +3,57 @@ try:
 except:
     from model.base import *
 
-class ComparadorDeVertices:
+class ComparadorDeIVertices:
 
     @staticmethod
-    def sonVerticesIdenticos( unVertice:Vertice, otroVertice:Vertice):
-        tienenElMismoCodigo = ComparadorDeVerticesPorCodigo.sonIguales(unVertice, otroVertice)
-        tienenElMismoNombre = ComparadorDeVerticesPorNombre.sonIguales(unVertice,otroVertice)
-        tienenLaMismaLista = ComparadorDeVerticesPorListaDeAristas.sonIguales( unVertice, otroVertice)
+    def sonIVerticesIdenticos( unIVertice:IVertice, otroIVertice:IVertice):
+        tienenElMismoCodigo = ComparadorDeIVerticesPorCodigo.sonIguales(unIVertice, otroIVertice)
+        tienenElMismoNombre = ComparadorDeIVerticesPorNombre.sonIguales(unIVertice,otroIVertice)
+        tienenLaMismaLista = ComparadorDeIVerticesPorListaDeAristas.sonIguales( unIVertice, otroIVertice)
         sonIguales = tienenElMismoCodigo and tienenElMismoNombre and tienenLaMismaLista
         return sonIguales
 
 #Comparadores de vertices por atributo
-class ComparadorDeVerticesPorCodigo:
+class ComparadorDeIVerticesPorCodigo:
     @staticmethod
-    def sonIguales( unVertice:Vertice, otroVertice:Vertice):
+    def sonIguales( unIVertice:IVertice, otroIVertice:IVertice):
         return (
-            ComparadorDeCodigoDeVertices.sonIguales( 
-                unVertice.getCodigo(), otroVertice.getCodigo()
+            ComparadorDeCodigoDeIVertices.sonIguales( 
+                unIVertice.getCodigo(), otroIVertice.getCodigo()
             )
         )
 
-class ComparadorDeVerticesPorNombre:
+class ComparadorDeIVerticesPorNombre:
     @staticmethod
-    def sonIguales( unVertice:Vertice, otroVertice:Vertice):
+    def sonIguales( unIVertice:IVertice, otroIVertice:IVertice):
         return (
-            ComparadorDeNombreDeVertices.sonIguales(
-                unVertice.getNombre(), otroVertice.getNombre()
+            ComparadorDeNombreDeIVertices.sonIguales(
+                unIVertice.getNombre(), otroIVertice.getNombre()
             )
         )
 
-class ComparadorDeVerticesPorListaDeAristas:
+class ComparadorDeIVerticesPorListaDeAristas:
     @staticmethod
-    def sonIguales( unVertice:Vertice, otroVertice:Vertice):
+    def sonIguales( unIVertice:IVertice, otroIVertice:IVertice):
         return(
-            ComparadorDeAristasDeVertices.sonIguales(
-                unVertice.getListaDeAristas(),
-                otroVertice.getListaDeAristas()
+            ComparadorDeAristasDeIVertices.sonIguales(
+                unIVertice.getListaDeAristas(),
+                otroIVertice.getListaDeAristas()
             )
         )
 
 #Comparadores de atributos
-class ComparadorDeCodigoDeVertices:
+class ComparadorDeCodigoDeIVertices:
     @staticmethod
-    def sonIguales( unCodigo:type(Vertice().getCodigo()), otroCodigo:type(Vertice().getCodigo())):
+    def sonIguales( unCodigo:type(IVertice().getCodigo()), otroCodigo:type(IVertice().getCodigo())):
         return unCodigo == otroCodigo
 
-class ComparadorDeNombreDeVertices:
+class ComparadorDeNombreDeIVertices:
     @staticmethod
-    def sonIguales( unNombre:type(Vertice().getNombre()), otroNombre:type(Vertice().getNombre())):
+    def sonIguales( unNombre:type(IVertice().getNombre()), otroNombre:type(IVertice().getNombre())):
         return unNombre == otroNombre
 
-class ComparadorDeAristasDeVertices:
+class ComparadorDeAristasDeIVertices:
 
     @staticmethod
     def sonIguales( unaListaDeAristas:list, otraListaDeAristas:list):

@@ -3,25 +3,39 @@ try:
 except:
     from model.base import *
 
+#region status values
+NO_VISITADO=0
+PARCIALMENTE_VISITADO=2
+TOTALMENTE_VISITADO = 1
+#endregion
+
 class BuscadorDepthFirst:
-    def __init__(self, grafo:Grafo, verticeSemilla:Vertice):
-        self.mapa = grafo
-        self.totalDeVertices = grafo.contarVertices()
-        self.__verticeInicio = verticeSemilla
-        self.__verticesTotalmenteVisitados = 0
+    def __init__(self, grafo:IGrafo, verticeSemilla:IVertice):
+        self.grafo = grafo
+        self.verticeInicio = verticeSemilla
 
     def ejecutarBusqueda(self):
-        vertices = self.mapa.getVertices().values()
-        self.__visitar( self.__verticeInicio)
+        verticesPorVisitar = self.getDiccionarioDeVisitas()
+        self.__visitar( self.verticeInicio, verticesPorVisitar)
 
-    def __visitar(self, vertice:Vertice):
+    def getDiccionarioDeVisitas(self):
+        diccionarioDeVisitas = {}
+        for codigoDeVertice in self.grafo.getVertices():
+            diccionarioDeVisitas[codigoDeVertice] = NO_VISITADO
+        return diccionarioDeVisitas
+
+    def __visitar(self, vertice:IVertice, dictDeVisitas:dict):
         print("vertice '"+vertice.getNombre()+"' parcialmente visitado")
+        dictDeVisitas[vertice.getCodigo()] = PARCIALMENTE_VISITADO
         listaDeAristas = vertice.getListaDeAristas()
-        vertice.estado = PARCIALMENTE_VISITADO
         for aristaIesima in listaDeAristas:
-            verticeVecino = aristaIesima.getVerticeConectado()
-            if verticeVecino.estado == NO_VISITADO:
-                self.__visitar(verticeVecino)
-        self.__verticesTotalmenteVisitados -= 1
+            verticeVecino = self.__getVerticeVecino( aristaIesima)
+            if dictDeVisitas[verticeVecino.getCodigo()] == NO_VISITADO:
+                self.__visitar(verticeVecino, dictDeVisitas)
+
+        dictDeVisitas[vertice.getCodigo()] = TOTALMENTE_VISITADO
         print("vertice '"+vertice.getNombre()+"' totalmente visitado")
+    
+    def __getVerticeVecino(self, aristaIesima:IArista):
+        return aristaIesima.getVerticeConectado()
         

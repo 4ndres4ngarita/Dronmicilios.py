@@ -6,9 +6,9 @@ def getVerticesDesdeCSV( archivo):
     siguienteCodigo = 1
     for lineaIesima in archivo:
 
-        nombreNuevoVertice = getNombre(lineaIesima.strip())
-        nuevoVertice = Vertice( siguienteCodigo, nombreNuevoVertice)
-        vertices[siguienteCodigo] = nuevoVertice
+        nombreNuevoIVertice = getNombre(lineaIesima.strip())
+        nuevoIVertice = IVertice( siguienteCodigo, nombreNuevoIVertice)
+        vertices[siguienteCodigo] = nuevoIVertice
         siguienteCodigo += 1
     archivo.close()
     return vertices
@@ -24,7 +24,7 @@ def agregarAristasDesdeCSV(archivo, vertices:dict):
             caracterSiguiente = lineaIesima[posicionSiguiente]
             if caracterSiguiente == "1":
                 verticeConectado = vertices[ codigoArista ]
-                nuevaArista = Arista()
+                nuevaArista = IArista()
                 nuevaArista.setVerticeConectado( verticeConectado)
                 verticeBase = vertices[codigoVerticeBase]
                 verticeBase.añadirArista( nuevaArista)
@@ -34,7 +34,7 @@ def agregarAristasDesdeCSV(archivo, vertices:dict):
     archivo.close()
 
 def importarGrafoDesdeCSV(rutaArchivo):
-    grafo = Grafo()
+    grafo = IGrafo()
     vertices = getVerticesDesdeCSV( open(rutaArchivo))
     grafo.setVertices( vertices)
     agregarAristasDesdeCSV( open(rutaArchivo), grafo.getVertices())

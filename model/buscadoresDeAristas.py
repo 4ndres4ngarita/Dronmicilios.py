@@ -1,9 +1,9 @@
 try:
     from base import *
-    from comparadoresDeVertices import *  
+    from comparadoresDeIVertices import *  
 except:
     from model.base import *
-    from model.comparadoresDeVertices import *
+    from model.comparadoresDeIVertices import *
 
 class IbuscadorDeAristas:
 
@@ -17,35 +17,35 @@ class IbuscadorDeAristas:
     def __añadirAristaEncontrada(self, aristaEncontrada:Arista):
         self.__aristasEncontradas.append( aristaEncontrada)
 #buscadores con la lista directa de un vertice.
-class BuscadorDeAristasPorVertice(IbuscadorDeAristas):
+class BuscadorDeAristasPorIVertice(IbuscadorDeAristas):
     def __init__(self, listaDeAristas):
         super().__init__(listaDeAristas)
     
-    def getAristas( self, verticeBuscado:Vertice):
+    def getAristas( self, verticeBuscado:IVertice):
         for aristaIesima in self._IbuscadorDeAristas__listaDeAristas:
-            verticeDeUnaArista = aristaIesima.getVerticeConectado()
-            unaAristaTieneElVerticeBuscado = (
-                ComparadorDeVertices.sonVerticesIdenticos( verticeDeUnaArista, verticeBuscado)
+            verticeDeUnaArista = aristaIesima.getIVerticeConectado()
+            unaAristaTieneElIVerticeBuscado = (
+                ComparadorDeIVertices.sonIVerticesIdenticos( verticeDeUnaArista, verticeBuscado)
             )
-            if unaAristaTieneElVerticeBuscado:
+            if unaAristaTieneElIVerticeBuscado:
                 self._IbuscadorDeAristas__añadirAristaEncontrada( aristaIesima)
-            del unaAristaTieneElVerticeBuscado
+            del unaAristaTieneElIVerticeBuscado
         return self._IbuscadorDeAristas__aristasEncontradas
 
-class BuscadorDeAristasPorCodigoDelVertice(IbuscadorDeAristas):
+class BuscadorDeAristasPorCodigoDelIVertice(IbuscadorDeAristas):
     def __init__(self, listaDeAristas):
         super().__init__(listaDeAristas)
 
-    def getAristas(self, codigoDelVerticeBuscado:str):
+    def getAristas(self, codigoDelIVerticeBuscado:str):
         for aristaIesima in self._IbuscadorDeAristas__listaDeAristas:
-            verticeDeUnaArista = aristaIesima.getVerticeConectado()
-            unVerticeTieneElCodigoBuscado =(
-                ComparadorDeCodigoDeVertices.sonIguales
-                ( verticeDeUnaArista.getCodigo(), codigoDelVerticeBuscado)
+            verticeDeUnaArista = aristaIesima.getIVerticeConectado()
+            unIVerticeTieneElCodigoBuscado =(
+                ComparadorDeCodigoDeIVertices.sonIguales
+                ( verticeDeUnaArista.getCodigo(), codigoDelIVerticeBuscado)
             )
-            if unVerticeTieneElCodigoBuscado: 
+            if unIVerticeTieneElCodigoBuscado: 
                 self._IbuscadorDeAristas__añadirAristaEncontrada( aristaIesima)
-            del unVerticeTieneElCodigoBuscado
+            del unIVerticeTieneElCodigoBuscado
         return self._IbuscadorDeAristas__aristasEncontradas
 
 #buscadores con listas procesadas.

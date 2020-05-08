@@ -1,9 +1,4 @@
-#region status values
-NO_VISITADO=0
-PARCIALMENTE_VISITADO=2
-TOTALMENTE_VISITADO = 1
-#endregion
-class Vertice:
+class IVertice:
     __codigo:str
     __nombre: str
     __listaDeAristas: list
@@ -14,8 +9,6 @@ class Vertice:
         self.__codigo = codigoInicial
         self.__nombre = nombreInicial
         self.__listaDeAristas = []
-
-        self.estado = NO_VISITADO
 
     """
         definimos getCodigo ( de un vertice) para:
@@ -47,13 +40,13 @@ class Vertice:
     def añadirArista(self, nuevaArista):
         self.__listaDeAristas.append( nuevaArista)
 
-class Arista:
-    __verticeConectado: Vertice
+class IArista:
+    __verticeConectado: IVertice
     __costo: float
     __numeroDeArista:int
 
     def __init__(self):
-        self.__verticeConectado = Vertice()
+        self.__verticeConectado = IVertice()
         self.__costo = 0.0
         self.__numeroDeArista = 0
 
@@ -66,7 +59,7 @@ class Arista:
     def getNumeroDeArista( self):
         return self.__numeroDeArista
     
-    def setVerticeConectado( self, nuevoVerticeConectado:Vertice):
+    def setVerticeConectado( self, nuevoVerticeConectado:IVertice):
         self.__verticeConectado = nuevoVerticeConectado
     
     def setCostos( self, nuevaCostos:float):
@@ -75,7 +68,7 @@ class Arista:
     def setNumeroDeArista( self, nuevoNumeroDeArista:int):
         self.__numeroDeArista = nuevoNumeroDeArista
 
-class Grafo:
+class IGrafo:
     __vertices:dict
 
     def __init__(self):
@@ -90,11 +83,11 @@ class Grafo:
     def setVertices(self, nuevosVertices:dict):
         self.__vertices = nuevosVertices
     
-    def añadirVertice(self, nuevoVertice:Vertice):
+    def añadirVertice(self, nuevoVertice:IVertice):
         palabraClave = nuevoVertice.getCodigo
         self.__vertices[palabraClave] = nuevoVertice
     
-    def quitarVertice(self, palabraClave:int):
+    def quitarVertice(self, palabraClave:int=0):
         self.__vertices.pop(palabraClave)
     
     def contarVertices(self):
