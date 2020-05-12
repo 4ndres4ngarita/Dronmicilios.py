@@ -1,42 +1,46 @@
 try:
-    from vertice import *
-    from arista import *
-except:
     from model.vertice import *
     from model.arista import *
-    
+except:
+    #from vertice import *
+    pass
+SI_EXISTE_EL_VERTICE_EN_EL_GRAFO = True
+NO_EXISTE_EL_VERTICE_EN_EL_GRAFO = False
+SI_EXISTE_EL_ARISTA_EN_EL_GRAFO = True
+NO_EXISTE_EL_ARISTA_EN_EL_GRAFO = False
+
 class grafo:
-
-    __SI_EXISTE_EL_VERTICE_EN_EL_GRAFO = True
-    __NO_EXISTE_EL_VERTICE_EN_EL_GRAFO = False
-    __SI_EXISTE_EL_ARISTA_EN_EL_GRAFO = True
-    __NO_EXISTE_EL_ARISTA_EN_EL_GRAFO = False
-
-    def __init__(self, verticesV = [], aristasE = []):
-        self.verticesV = verticesV
-        self.aristasE = aristasE
+    def __init__(self, verticesV:list, aristasE:list):
+        self.verticesV = []
+        if len(verticesV) > 0:
+            self.añadirVertices( verticesV)
+        self.aristasE = []
+        if len(aristasE) > 0:
+            self.añadirAristas( aristasE)
     
     def añadirVertices(self, vertices:list):
         for nuevoVerticeIesimo in vertices:
             self.añadirVertice( nuevoVerticeIesimo)
 
-    def añadirVertice(self, vertice:vertice):
-        noEstaEnLaLista = not self.existeVertice( vertice)
+    def añadirVertice(self, verticeParaAgregar:vertice):
+        noEstaEnLaLista = not self.existeVertice( verticeParaAgregar.codigo)
         if noEstaEnLaLista:
-            self.verticesV.append(vertice)
+            verticeNuevo = vertice()
+            verticeNuevo.copiarAtributos(verticeParaAgregar)
+            self.verticesV.append(verticeNuevo)
 
-    def existeVertice(self, vertice:vertice):
-        respuesta = __NO_EXISTE_EL_VERTICE_EN_EL_GRAFO
+    def existeVertice(self, codigoVertice:str):
+        respuesta = NO_EXISTE_EL_VERTICE_EN_EL_GRAFO
         for verticeIesimo in self.verticesV:
-            if verticeIesimo == vertice:
-                respuesta = __SI_EXISTE_EL_VERTICE_EN_EL_GRAFO
+            if verticeIesimo.codigo == codigoVertice:
+                respuesta = SI_EXISTE_EL_VERTICE_EN_EL_GRAFO
         return respuesta
     
     def añadirAristas(self, aristas:list):
         for nuevaAristaIesima in aristas:
             self.añadirArista( nuevaAristaIesima)
 
-    def buscarVertice(self, codigo:str):
+    def getVertice(self, codigo:str):
         verticeRespuesta = vertice()
         for verticeIesimo in self.verticesV:
             if verticeIesimo.codigo == codigo:
@@ -44,16 +48,33 @@ class grafo:
                 break
         return verticeRespuesta
 
-    def añadirArista(self, arista:arista):
-        noEstaEnLaLista = not self.existeArista( arista)
-        if noEstaEnLaLista:
-            self.aristasE.append(arista)
-
+    def añadirArista(self, aristaParaAgregar:arista):
+        codigoVerticeU = aristaParaAgregar.vertices["u"].codigo
+        codigoVerticeV = aristaParaAgregar.vertices["v"].codigo
+        del aristaParaAgregar.vertices["u"]
+        del aristaParaAgregar.vertices["v"]
+        existeVerticeU = self.existeVertice( codigoVerticeU)
+        existeVerticeV = self.existeVertice( codigoVerticeV)
+        existenVertices = existeVerticeU and existeVerticeV
+        if existenVertices:
+            aristaParaAgregar.vertices["u"] = self.getVertice(codigoVerticeU)
+            aristaParaAgregar.vertices["u"].añadirVecino(
+               codigoVerticeV
+            )
+            aristaParaAgregar.vertices["v"] = self.getVertice(codigoVerticeV)
+            aristaParaAgregar.vertices["v"].añadirVecino(
+                codigoVerticeU
+            )
+            
+            self.aristasE.append(aristaParaAgregar)
+        del codigoVerticeU
+        del codigoVerticeV
+            
     def existeArista(self, arista:arista):
-        respuesta = __NO_EXISTE_EL_ARISTA_EN_EL_GRAFO
+        respuesta = NO_EXISTE_EL_ARISTA_EN_EL_GRAFO
         for aristaIesimo in self.aristasE:
             if aristaIesimo == arista:
-                respuesta = __SI_EXISTE_EL_ARISTA_EN_EL_GRAFO
+                respuesta = SI_EXISTE_EL_ARISTA_EN_EL_GRAFO
         return respuesta
     
     def buscarAristasConVertice(self, verticeBuscado:vertice):
@@ -81,6 +102,3 @@ class grafo:
             iteracion += 1
         del iteracion
         return formato
-
-        
-

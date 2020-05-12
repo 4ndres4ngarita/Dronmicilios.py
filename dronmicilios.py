@@ -1,8 +1,9 @@
 from model.vertice import *
 from model.arista import *
 from model.grafo import *
-from model.depthFirstSearch import *
-from model.ordenamiento import *
+from model.algoritmosDeRuta import *
+from model.algoritmosDeRecorrido import *
+from model.algoritmosDeOrdenamiento import *
 import time
 def getVerticesDesdeCSV( archivo):
     vertices = []
@@ -29,15 +30,20 @@ def getAristasDesdeCSV(archivo, vertices:list):
                 nuevaArista = arista()
                 verticeU = vertices[posicionVerticeU]
                 verticeV = vertices[posicionVerticeV]
-                verticeU.añadirVecino( verticeV.codigo)
-                verticeV.añadirVecino( verticeU.codigo)
                 nuevaArista.vertices["u"] = verticeU
                 nuevaArista.vertices["v"] = verticeV
                 aristas.append( nuevaArista)
             posicionVerticeV += 1
+            del columnaIesima
+            del siguienteColumna
         posicionVerticeU += 1
+        del lineaIesima
+    del columnaInicio
+    del columnaFin
     del posicionVerticeU
     del posicionVerticeV
+    del longitudMatrizAdyacencia
+    
     archivo.close()
     return aristas
     
@@ -77,9 +83,16 @@ ruta = "doc/Adyacencia.csv"
 grafo = importarGrafoDesdeCSV( ruta)
 imprimirBanner()
 
-semilla = grafo.buscarVertice('A')
-dfs = BuscadorDepthFirst( grafo,semilla)
-dfs.ejecutarBusqueda()
+#test algoritmo Depth Fisrt Search
+semilla = grafo.getVertice('A')
+dfs = DepthFirstSearch()
+dfs.estaTotalmenteConectado( grafo, semilla)
+
+#test algoritmo Kruskal
+mspKrustal = Kruskal()
+grafoDeRutasMinimas = mspKrustal.getGrafoDeRutaMinima(grafo)
+print(grafoDeRutasMinimas)
+
 tiempoFin = time.time()
 print("inicio : "+str(tiempoInicio)+"\n"
     +"fin : "+str(tiempoFin)+"\n"

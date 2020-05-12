@@ -1,9 +1,9 @@
 SI_ES_VECINO = True
 NO_ES_VECINO = False
 class vertice:
-    def __init__(self, codigo:str="", vecinos:list=[]):
+    def __init__(self, codigo:str=""):
         self.codigo = codigo
-        self.vecinos = vecinos
+        self.vecinos = []#este atributo deberá ser modificado directamente por un grafo
     
     def añadirVecino(self, nuevoVecino:str):
         noEsVecino = not self.esVecino(nuevoVecino)
@@ -22,6 +22,9 @@ class vertice:
             if vecinoIesimo == vecino:
                 respuesta = SI_ES_VECINO
         return respuesta
+    
+    def copiarAtributos(self, verticeBase):
+        self.codigo = verticeBase.codigo
 
     def __str__(self):
         return self.codigo

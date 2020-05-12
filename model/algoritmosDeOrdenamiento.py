@@ -4,12 +4,16 @@ except:
     from model.arista import *
 
 class IAlgoritmoDeOrdenamiento:
-    def ordenarAristas(self, aristas:list):
+    @staticmethod
+    def ordenarAristas( aristas:list):
+        pass
+    @staticmethod
+    def ordenarLista( arrayA:list):
         pass
 
 class selectionSort( IAlgoritmoDeOrdenamiento):
-    
-    def ordenarAristas(self, aristas:list):
+    @staticmethod
+    def ordenarAristas( aristas:list):
         aristaMenor:arista
         for i in range(len(aristas)):
             posicionAristaMenor = i
@@ -17,8 +21,8 @@ class selectionSort( IAlgoritmoDeOrdenamiento):
                 if aristas[posicionAristaMenor].costo > aristas[j].costo: 
                     posicionAristaMenor = j
             aristas[i], aristas[posicionAristaMenor] = aristas[posicionAristaMenor], aristas[i]
-
-    def __ordenar(self, arrayA:list = [64, 25, 12, 22, 11] ):
+    @staticmethod
+    def ordenarLista( arrayA):
         for i in range(len(arrayA)): 
       
             # Find the minimum element in remaining  
@@ -31,4 +35,3 @@ class selectionSort( IAlgoritmoDeOrdenamiento):
             # Swap the found minimum element with  
             # the first element         
             arrayA[i], arrayA[min_idx] = arrayA[min_idx], arrayA[i]
-        
