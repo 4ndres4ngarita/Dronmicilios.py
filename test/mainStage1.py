@@ -3,20 +3,20 @@ RUTA_RAIZ = "D:/Proyectos/Dronmicilios.py/"#path del directorio de origen.Manten
 import json,sys
 sys.path.append( RUTA_RAIZ)
 from model.base import *
-from model.comparadoresDeVertices import *
+from model.comparadoresDeIVertices import *
 from model.buscadoresDeAristas import *
 def __main__():
-    vertices = cargarVerticesEnMemoria()
-    realizarPruebas_ComparadoresDeVertices_(vertices)
+    vertices = cargarIVerticesEnMemoria()
+    realizarPruebas_ComparadoresDeIVertices_(vertices)
     realizarPruebas_BuscadoresDeAristas_(vertices)
     
 
 #funciones para abstraer datos Json a Objetos
-def cargarVerticesEnMemoria():
+def cargarIVerticesEnMemoria():
     #with open("D:/Proyectos/ProyectoIn7egrador/test/graphStage1.json") as json_file:
     documento = importarArchivo( RUTA_RAIZ+"/graphStage1.json")
     datosJson = importarJsonDesdeArchivo( documento)
-    vertices = importarVerticesDesdeJson(datosJson)
+    vertices = importarIVerticesDesdeJson(datosJson)
     importarAristasDesdeJson( datosJson, vertices)
     del documento
     del datosJson
@@ -28,92 +28,92 @@ def importarArchivo( rutaDelArchivo:str):
 def importarJsonDesdeArchivo( archivo):
     jsonCrudo = json.load( archivo)
     return jsonCrudo
-def importarVerticesDesdeJson( baseDeDatosJson):
-    listaDeVertices= []
+def importarIVerticesDesdeJson( baseDeDatosJson):
+    listaDeIVertices= []
     for jsonIesimo in baseDeDatosJson["vertices"]:
-        nuevoVertice = Vertice(
+        nuevoIVertice = IVertice(
             jsonIesimo["codigo"],
             jsonIesimo["nombre"]
         )
-        listaDeVertices.append( nuevoVertice)
-        del nuevoVertice
-    return listaDeVertices
+        listaDeIVertices.append( nuevoIVertice)
+        del nuevoIVertice
+    return listaDeIVertices
 
-def importarPaqueteDeAristasJson( baseDeDatosJson, codigoDelVertice:str):
+def importarPaqueteDeAristasJson( baseDeDatosJson, codigoDelIVertice:str):
     paqueteDeAristasJson = []
     BaseDeDatosDeAristas = baseDeDatosJson["aristas"]
     for paqueteIesimo in BaseDeDatosDeAristas:
-        if paqueteIesimo["vertice"] == codigoDelVertice:
+        if paqueteIesimo["vertice"] == codigoDelIVertice:
             paqueteDeAristasJson = paqueteIesimo["lista"]
             break
     del BaseDeDatosDeAristas
     return paqueteDeAristasJson
-def abstraerAristasJson( paqueteDeAristas, listaDeVertices:list):
+def abstraerAristasJson( paqueteDeAristas, listaDeIVertices:list):
     listaDeAristas = []
     for aristaJsonIesimo in paqueteDeAristas:
         nuevaArista = Arista()
         nuevaArista.setCostos( aristaJsonIesimo["costo"])
         nuevaArista.setNumeroDeArista(aristaJsonIesimo["numeroDeArista"])
-        for verticeIesimo in listaDeVertices:
+        for verticeIesimo in listaDeIVertices:
             if verticeIesimo.getCodigo() == aristaJsonIesimo["verticeConectado"]:
-                nuevaArista.setVerticeConectado( verticeIesimo)
+                nuevaArista.setIVerticeConectado( verticeIesimo)
                 break
         listaDeAristas.append( nuevaArista)
     return listaDeAristas
-def importarAristasDeUnVertice( baseDeDatosJson, codigoDelVertice:str, listaDeVertices:list):
-    paqueteDeAristasEnCrudo = importarPaqueteDeAristasJson( baseDeDatosJson, codigoDelVertice)
-    listaDeAristas = abstraerAristasJson( paqueteDeAristasEnCrudo, listaDeVertices)
+def importarAristasDeUnIVertice( baseDeDatosJson, codigoDelIVertice:str, listaDeIVertices:list):
+    paqueteDeAristasEnCrudo = importarPaqueteDeAristasJson( baseDeDatosJson, codigoDelIVertice)
+    listaDeAristas = abstraerAristasJson( paqueteDeAristasEnCrudo, listaDeIVertices)
     return listaDeAristas
-def importarAristasDesdeJson( baseDeDatosJson, listaDeVertices:list):
-    for verticeIesimo in listaDeVertices:
-        listaDeAristas = importarAristasDeUnVertice(
+def importarAristasDesdeJson( baseDeDatosJson, listaDeIVertices:list):
+    for verticeIesimo in listaDeIVertices:
+        listaDeAristas = importarAristasDeUnIVertice(
             baseDeDatosJson,
             verticeIesimo.getCodigo(), 
-            listaDeVertices)
+            listaDeIVertices)
         verticeIesimo.setListaDeAristas( listaDeAristas)
 
-def presentarVertice( vertice:Vertice):
+def presentarIVertice( vertice:IVertice):
     print(
         "{ codigo : "+ vertice.getCodigo() +
         ", nombre : "+ vertice.getNombre() +
         ", numero de aristas : "+ str(len(vertice.getListaDeAristas()))+
         " }"
     )
-def presentarVertices( listaDeVertices:list):
-    for verticeIesimo in listaDeVertices:
-        presentarVertice( verticeIesimo)
+def presentarIVertices( listaDeIVertices:list):
+    for verticeIesimo in listaDeIVertices:
+        presentarIVertice( verticeIesimo)
 
 
 #funciones de pruebas
-def realizarPruebas_ComparadoresDeVertices_( vertices):
+def realizarPruebas_ComparadoresDeIVertices_( vertices):
     n1 = vertices[0]
     n2 = vertices[1]
     n3 = vertices[2]
     n4 = vertices[3]
     n1copia = vertices[0]
     if(
-        not ComparadorDeVerticesPorCodigo.sonIguales( n1,n2) and
-        not ComparadorDeVerticesPorNombre.sonIguales( n1,n3) and
-        not ComparadorDeVerticesPorListaDeAristas.sonIguales(n2,n3) and
-        not ComparadorDeVertices.sonVerticesIdenticos( n1, n2) and
-        ComparadorDeVertices.sonVerticesIdenticos(n1, n1copia)
+        not ComparadorDeIVerticesPorCodigo.sonIguales( n1,n2) and
+        not ComparadorDeIVerticesPorNombre.sonIguales( n1,n3) and
+        not ComparadorDeIVerticesPorListaDeAristas.sonIguales(n2,n3) and
+        not ComparadorDeIVertices.sonIVerticesIdenticos( n1, n2) and
+        ComparadorDeIVertices.sonIVerticesIdenticos(n1, n1copia)
     ):
-        print("test comparadoresDeVertices : okey!")
+        print("test comparadoresDeIVertices : okey!")
     else:
-        print("test comparadoresDeVertices: not okey :/")
+        print("test comparadoresDeIVertices: not okey :/")
 def realizarPruebas_BuscadoresDeAristas_( vertices):
     n1 = vertices[0]
     n2 = vertices[1]
     n3 = vertices[2]
     n4 = vertices[3]
-    buscadorPorVerticesEn_n1 = BuscadorDeAristasPorVertice( n1.getListaDeAristas())
-    buscadorPorCodigoDeVerticeEn_n1 = BuscadorDeAristasPorCodigoDelVertice( n1.getListaDeAristas())
+    buscadorPorIVerticesEn_n1 = BuscadorDeAristasPorIVertice( n1.getListaDeAristas())
+    buscadorPorCodigoDeIVerticeEn_n1 = BuscadorDeAristasPorCodigoDelIVertice( n1.getListaDeAristas())
     subTest1 = (
-        buscadorPorVerticesEn_n1.getAristas( n2) ==
-        buscadorPorCodigoDeVerticeEn_n1.getAristas( n2.getCodigo())
+        buscadorPorIVerticesEn_n1.getAristas( n2) ==
+        buscadorPorCodigoDeIVerticeEn_n1.getAristas( n2.getCodigo())
     )
-    buscadorPorCodigoDeVerticeEn_n3 = BuscadorDeAristasPorCodigoDelVertice( n3.getListaDeAristas())
-    aristasDeN3conN2 = buscadorPorCodigoDeVerticeEn_n3.getAristas( "2")
+    buscadorPorCodigoDeIVerticeEn_n3 = BuscadorDeAristasPorCodigoDelIVertice( n3.getListaDeAristas())
+    aristasDeN3conN2 = buscadorPorCodigoDeIVerticeEn_n3.getAristas( "2")
     buscadorPorNumeroDeAristaEn_n3 = BuscadorDeAristasPorNumeroDeArista( aristasDeN3conN2)
     subTest2 = len(buscadorPorNumeroDeAristaEn_n3.getAristas( 1)) == 1
     if( subTest1 and subTest2):
