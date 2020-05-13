@@ -4,68 +4,8 @@ from model.grafo import *
 from model.algoritmosDeRuta import *
 from model.algoritmosDeRecorrido import *
 from model.algoritmosDeOrdenamiento import *
+from grafoDeClientes import MAPA
 import time
-def getVerticesDesdeCSV( archivo):
-    vertices = []
-    for lineaIesima in archivo:
-
-        codigoNuevoVertice = getCodigoDeVertice(lineaIesima.strip())
-        nuevoVertice = vertice(codigoNuevoVertice)
-        vertices.append( nuevoVertice)
-    archivo.close()
-    return vertices
-
-def getAristasDesdeCSV(archivo, vertices:list):
-    aristas = []
-    longitudMatrizAdyacencia = len(vertices)
-    posicionVerticeU = 0
-    
-    for lineaIesima in archivo:
-        posicionVerticeV = 1 + posicionVerticeU
-        columnaInicio = getLongitudDeNombre( lineaIesima) + 1 + (posicionVerticeV * 2)
-        columnaFin = len(lineaIesima)
-        for columnaIesima in range( columnaInicio , columnaFin, 2):
-            siguienteColumna = lineaIesima[columnaIesima]
-            if siguienteColumna == '1':
-                nuevaArista = arista()
-                verticeU = vertices[posicionVerticeU]
-                verticeV = vertices[posicionVerticeV]
-                nuevaArista.vertices["u"] = verticeU
-                nuevaArista.vertices["v"] = verticeV
-                aristas.append( nuevaArista)
-            posicionVerticeV += 1
-            del columnaIesima
-            del siguienteColumna
-        posicionVerticeU += 1
-        del lineaIesima
-    del columnaInicio
-    del columnaFin
-    del posicionVerticeU
-    del posicionVerticeV
-    del longitudMatrizAdyacencia
-    
-    archivo.close()
-    return aristas
-    
-def importarGrafoDesdeCSV(rutaArchivo):
-    verticesAbstraidos = getVerticesDesdeCSV( open(rutaArchivo))
-    aristasAbstraidas = getAristasDesdeCSV( open(rutaArchivo), verticesAbstraidos)
-    return grafo(verticesAbstraidos, aristasAbstraidas)
-
-def getCodigoDeVertice( linea:str):
-    posicionDelCaracter = 0
-    nombre = ""
-    while linea[posicionDelCaracter] != ";":
-        nombre += linea[posicionDelCaracter]
-        posicionDelCaracter += 1
-    return nombre
-
-def getLongitudDeNombre( linea:str):
-    posicionDelCaracter = 0
-    contador = 0
-    while linea[contador] != ";":
-        contador += 1
-    return contador
 
 def imprimirBanner():
     print("\n")
@@ -78,22 +18,40 @@ def imprimirBanner():
     print("\n")
 
 print("inicio")
-tiempoInicio = time.time()
-ruta = "doc/Adyacencia.csv"
-grafo = importarGrafoDesdeCSV( ruta)
+
+semilla = MAPA.getVertice('J')
 imprimirBanner()
 
 #test algoritmo Depth Fisrt Search
-semilla = grafo.getVertice('A')
+
 dfs = DepthFirstSearch()
-dfs.estaTotalmenteConectado( grafo, semilla)
+
+print("inicio del algoritmo Depth Fisrt Search")
+print("\n\n")
+tiempoInicio = time.time()#inicio conteo del tiempo
+dfs.estaTotalmenteConectado( MAPA, semilla)
+tiempoFin = time.time()#fin del tiempo
+dfs.imprimirRecorrido()
+print("\n\n")
+print("\tTiempo del agloritmo (Depth Fisrt Search):")
+print("\t\tinicio : "+str(tiempoInicio)+"\n"
+    +"\t\tfin : "+str(tiempoFin)+"\n"
+    +"\t\tdiferencia : "+str(tiempoFin - tiempoInicio))
+
+print("\n\n")
 
 #test algoritmo Kruskal
 mspKrustal = Kruskal()
-grafoDeRutasMinimas = mspKrustal.getGrafoDeRutaMinima(grafo)
-print(grafoDeRutasMinimas)
+print("inicio del algoritmo Kruskal")
+print("\n")
+tiempoInicio = time.time()#inicio conteo del tiempo
+grafoDeRutasMinimas = mspKrustal.getGrafoDeRutaMinima(MAPA)
+tiempoFin = time.time()#fin del tiempo
+print("\n\n")
+print("\tTiempo del agloritmo (Kruskal):")
+print("\t\tinicio : "+str(tiempoInicio)+"\n"
+    +"\t\tfin : "+str(tiempoFin)+"\n"
+    +"\t\tdiferencia : "+str(tiempoFin - tiempoInicio))
 
-tiempoFin = time.time()
-print("inicio : "+str(tiempoInicio)+"\n"
-    +"fin : "+str(tiempoFin)+"\n"
-    +"diferencia : "+str(tiempoFin - tiempoInicio))
+print(grafoDeRutasMinimas)
+print("el costo total del grafo con las rutas minimas es : " + str(mspKrustal.getCostoTotalDeRutaMinima()))

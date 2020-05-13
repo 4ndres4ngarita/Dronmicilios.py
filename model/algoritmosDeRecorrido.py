@@ -11,11 +11,14 @@ class IAlgoritmoDeRecorrido:
         pass
     def estaTotalmenteConectado(self, grafoBase:grafo, verticeSemilla:vertice):
         pass
+    def imprimirRecorrido(self):
+        pass
 
 class DepthFirstSearch(IAlgoritmoDeRecorrido):
     def __init__(self):
         super().__init__()
         self.diccionarioDeVisitas = {}
+        self.ordenDeVerticesVisitados = []
         
 
     def __alistarDiccionarioDeVisitas(self, grafoBase:grafo):
@@ -24,18 +27,17 @@ class DepthFirstSearch(IAlgoritmoDeRecorrido):
             diccionarioNuevo[verticeIesimo.codigo] = NO_VISITADO
         self.diccionarioDeVisitas = diccionarioNuevo
     
-    def __visitar(self, verticeSemilla:vertice, grafoBase:grafo):
-        print("vertice '"+verticeSemilla.codigo+"' parcialmente visitado")
-        self.diccionarioDeVisitas[verticeSemilla.codigo] = PARCIALMENTE_VISITADO
+    def __visitar(self, verticeRaiz:vertice, grafoBase:grafo):
+        self.ordenDeVerticesVisitados.append(verticeRaiz.codigo)
+        self.diccionarioDeVisitas[verticeRaiz.codigo] = PARCIALMENTE_VISITADO
 
-        listaDeAristas = grafoBase.buscarAristasConVertice(verticeSemilla)
+        listaDeAristas = grafoBase.buscarAristasConVertice(verticeRaiz)
         for aristaIesima in listaDeAristas:
-            verticeVecino = aristaIesima.getVerticeVecino( verticeSemilla)
+            verticeVecino = aristaIesima.getVerticeVecino( verticeRaiz)
             if self.diccionarioDeVisitas[verticeVecino.codigo] == NO_VISITADO:
                 self.__visitar(verticeVecino, grafoBase)
 
-        self.diccionarioDeVisitas[verticeSemilla.codigo] = TOTALMENTE_VISITADO
-        print("vertice '"+verticeSemilla.codigo+"' totalmente visitado")
+        self.diccionarioDeVisitas[verticeRaiz.codigo] = TOTALMENTE_VISITADO
     
     def estaTotalmenteConectado(self, grafoBase:grafo, verticeSemilla:vertice):
         respuesta = True
@@ -67,3 +69,7 @@ class DepthFirstSearch(IAlgoritmoDeRecorrido):
             if respuesta:
                 break
         return respuesta
+    
+    def imprimirRecorrido(self):
+        for verticeI in self.ordenDeVerticesVisitados:
+            print("vertice :" + verticeI + " parcialmente visitado.")

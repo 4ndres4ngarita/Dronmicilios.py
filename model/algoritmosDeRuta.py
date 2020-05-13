@@ -11,7 +11,7 @@ except:
 class IAlgoritmoDeRuta:
     def getGrafoDeRutaMinima(self, grafoBase:grafo):
         pass
-    def ejecutarAlgoritmo(self):
+    def getCostoTotalDeRutaMinima(self):
         pass
 
 class Kruskal(IAlgoritmoDeRuta):
@@ -19,26 +19,26 @@ class Kruskal(IAlgoritmoDeRuta):
         super().__init__()
         self.grafoDeEstudio = grafo([],[])
         self.__grafoDeRutaMinima = grafo([],[])
-    
+
     def getGrafoDeRutaMinima(self, grafoBase:grafo):
         self.grafoDeEstudio = grafoBase
         if self.estaTotalmenteConectado( DepthFirstSearch):
-            print("1 - esta todo conectado")
             self.ordenarAristas(selectionSort)
-            print("2 - las aristas estan ordenadas")
             for aristaIesima in self.grafoDeEstudio.aristasE:
                 if not self.estanSusVerticesAñadidos( aristaIesima):
-                    print("toca añadir la arista : " + str(aristaIesima) + "porque no existen uno de los dos vertices")#se agrega una arista el grafo con la ruta minima
+                    print("toca añadir la arista : " + str(aristaIesima) + "porque no existen uno de los dos vertices")
                     self.agregarAristaYvertices( aristaIesima)
                 elif (not self.existeRutaEntreVertices(
                         aristaIesima, DepthFirstSearch)):
                         print("toca añadir la arista : " + str(aristaIesima) + "porque no existen una ruta para uno de los dos vertices")
-                #sin esta condicion se demorará mas el algoritmo
-                if len(grafoBase.verticesV) == len(self.__grafoDeRutaMinima.verticesV):
-                    print("ya se encontraron todos los vertices :)")
-                    break
+                        self.agregarAristaYvertices( aristaIesima)
         return self.__grafoDeRutaMinima
-#continuacion del algoritmo
+    
+    def getCostoTotalDeRutaMinima(self):
+        costoTotal = 0.0
+        for aristaIesima in self.__grafoDeRutaMinima.aristasE:
+            costoTotal += aristaIesima.costo
+        return costoTotal
 
     def estaTotalmenteConectado(self, algoritmo:IAlgoritmoDeRecorrido):
         algoritmoDeRecorrido = algoritmo()
@@ -69,6 +69,7 @@ class Kruskal(IAlgoritmoDeRuta):
         self.__grafoDeRutaMinima.añadirVertice( aristaNueva.vertices["u"])
         self.__grafoDeRutaMinima.añadirVertice( aristaNueva.vertices["v"])
         self.__grafoDeRutaMinima.añadirArista( aristaNueva)
+    
     def calcularCostoTotal(self):
         pass
     

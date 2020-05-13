@@ -5,14 +5,14 @@ Considere una  empresa de  domicilios,  que en  tiempos del  **COVID19**,  usa d
 Commit 20.05.12
  =
 
-## version #1 del algoritmo Kruskal y DFS
+## Sin importacion de tipo CSV.
 
-* Partimos desde la teoria matematica de los grafos.Esto quiere decir que se consideran las estructuras vertice ( antes nodos), arista (antes conexion) y grafo.
+* No se hizo una importacion y abstracion de datos, sino que directamente en el archivo "grafoDeClientes.py", se tiene directamente los objetos, o el mapa del caso de estudio para el examen.
 
-* No esta comentado el codigo en el 99% de su extension.
+* No esta comentado el codigo en el 99.999% de su extension.
 
-* ejGraficador.py es un archivo que permite graficar un grafo, pero sin aprobechar las clases creadas en el proyecto.
+* Esta vez se esta usando o teniendo en cuenta los costos de cada arista para formar el arbol minimo de expansion partiendo de una interfaz (IAlgoritmoDeRuta) hasta una implementacion de la misma, en este caso y por el momento el algoritmo de Kruskal.
 
-* dristan.py es un algoritmo encontrado en internet que implementa el algoritmo de kruskal.
+* Se hicieron arreglos, o tratar de optimizar la programacion de los algoritmos.
 
-* El grafo que se importa, no tiene los costos de cada arista.
+* Se esta usando toma de tiempo separada para cada algoritmo en el archivo principal ("dronmicilios.py")

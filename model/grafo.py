@@ -48,7 +48,7 @@ class grafo:
                 break
         return verticeRespuesta
 
-    def añadirArista(self, aristaParaAgregar:arista):
+    def añadirArista(self, aristaParaAgregar):
         codigoVerticeU = aristaParaAgregar.vertices["u"].codigo
         codigoVerticeV = aristaParaAgregar.vertices["v"].codigo
         del aristaParaAgregar.vertices["u"]
@@ -70,7 +70,7 @@ class grafo:
         del codigoVerticeU
         del codigoVerticeV
             
-    def existeArista(self, arista:arista):
+    def existeArista(self, arista):
         respuesta = NO_EXISTE_EL_ARISTA_EN_EL_GRAFO
         for aristaIesimo in self.aristasE:
             if aristaIesimo == arista:
@@ -89,16 +89,16 @@ class grafo:
         iteracion = 1
         for verticeIesimo in self.verticesV:
             if iteracion == len(self.verticesV):
-                formato += verticeIesimo.codigo + " ]\nE = ["
+                formato += verticeIesimo.codigo + " ]\nE = \n[\n"
             else:
                 formato += verticeIesimo.codigo + " , "
             iteracion += 1
         iteracion = 1
         for aristaIesima in self.aristasE:
             if iteracion == len(self.aristasE):
-                formato += "(" + aristaIesima.vertices["u"].codigo +","+ aristaIesima.vertices["v"].codigo +")]\n"
+                formato += "\t(" + aristaIesima.vertices["u"].codigo +","+ aristaIesima.vertices["v"].codigo +")\n]"
             else:
-                formato += "(" + aristaIesima.vertices["u"].codigo +","+ aristaIesima.vertices["v"].codigo +") , "
+                formato += "\t(" + aristaIesima.vertices["u"].codigo +","+ aristaIesima.vertices["v"].codigo +"), \n"
             iteracion += 1
         del iteracion
         return formato
