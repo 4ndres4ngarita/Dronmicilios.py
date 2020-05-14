@@ -83,7 +83,30 @@ class grafo:
             if aristaIesima.estaElVertice(verticeBuscado):
                 aristasEncontradas.append(aristaIesima)
         return aristasEncontradas
-    
+
+    """
+        TODO: este metodo no debe limitarse a entregar una sola arista,
+        deberia entregar todas las aristas que encuentre.
+    """
+    def buscarAristasConVertices(self, verticeU, verticeV):
+        """
+            WARNING: al asignar el vertice u a la variable verticeU, estoy
+            cambiando lo que es verticeU dentro de este metodo? o estoy
+            afectando tambien al que llamó esta función?
+        """
+        if (type(verticeU) is str) and (type(verticeV) is str):
+            verticeU = self.getVertice( verticeU)
+            verticeV = self.getVertice( verticeV)
+
+        aristasEncontradas = []
+        for aristaIesima in self.aristasE:
+            estaElVerticeU = aristaIesima.estaElVertice( verticeU)
+            estaElVerticeV = aristaIesima.estaElVertice( verticeV)
+            if estaElVerticeU and estaElVerticeV:
+                aristasEncontradas.append(aristaIesima)
+                break
+        return aristasEncontradas[0]
+
     def __str__(self):
         formato = "G = (V,E) \nV = ["
         iteracion = 1

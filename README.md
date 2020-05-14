@@ -5,6 +5,7 @@ Considere una  empresa de  domicilios,  que en  tiempos del  **COVID19**,  usa d
 Commit 20.05.14
  =
 
-## cambios de nombres de archivos de algoritmos
+## probando dijkstra(pag.175). grafo puede 'buscarAristasConVertices()'
 
-* no vean algoritmo de ruta, es un asco.
+* WARNING: el codigo en dijkstra.py no esta probado. Guardo commit por si las moscas.
+* añadí grafo.buscarAristasConVertices(), lo cual buscará la, primera, arista en la que se relaciones los dos vertices pasados como parametros. hay una cuestion en el uso de este método.
