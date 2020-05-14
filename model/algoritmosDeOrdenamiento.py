@@ -1,7 +1,4 @@
-try:
-    from arista import *
-except:
-    from model.arista import *
+from model.arista import *
 
 class IAlgoritmoDeOrdenamiento:
     @staticmethod

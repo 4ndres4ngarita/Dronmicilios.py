@@ -1,8 +1,8 @@
 from model.vertice import *
 from model.arista import *
 from model.grafo import *
-from model.algoritmosDeRuta import *
-from model.algoritmosDeRecorrido import *
+from model.algoritmosDeExpansion import *
+from model.algoritmosDeExploracion import *
 from model.algoritmosDeOrdenamiento import *
 from grafoDeClientes import MAPA
 import time
@@ -17,41 +17,55 @@ def imprimirBanner():
     print("\t  [DRONMICILIOS.PY]")
     print("\n")
 
+def provarAlgoritmoDFS( grafo, raiz, repeticiones:int):
+    dfs = DepthFirstSearch()
+    tiempos = []
+    for repeticionDePrueba in range(0, repeticiones):
+        tiempoInicio = time.time()#inicio del cronometraje
+
+        dfs.ejecutarArlgoritmo( grafo, raiz)
+
+        tiempoFin = time.time()#fin del cronometraje
+        tiempos.append( tiempoFin-tiempoInicio)
+    print("prueba completa tiempos totales:")
+    print(tiempos)
+
+def provarAlgoritmoBFS( grafo, raiz, repeticiones:int):
+    bfs = BreadthFirstSearch()
+    tiempos = []
+    for repeticionDePrueba in range(0, repeticiones):
+        tiempoInicio = time.time()#inicio del cronometraje
+
+        bfs.ejecutarArlgoritmo( grafo, raiz)
+
+        tiempoFin = time.time()#fin del cronometraje
+        tiempos.append( tiempoFin-tiempoInicio)
+    print("prueba completa tiempos totales:")
+    print(tiempos)
+
+def provarAlgoritmoKrustal( grafo, algoritmoDeRecorrido, repeticiones:int):
+    algoritmoKrustal = Kruskal()
+    tiempos = []
+    for repeticionDePrueba in range(0, repeticiones):
+        tiempoInicio = time.time()#inicio del cronometraje
+
+        grafoDeRutasMinimas = algoritmoKrustal.getGrafoDeExpansionMinima( grafo, algoritmosDeExploracion=algoritmoDeRecorrido)
+
+        tiempoFin = time.time()#fin del cronometraje
+        tiempos.append( tiempoFin-tiempoInicio)
+    print("prueba completa tiempos totales:")
+    print(tiempos)
+
 print("inicio")
 
-semilla = MAPA.getVertice('J')
+raiz = MAPA.getVertice('J')
 imprimirBanner()
 
 #test algoritmo Depth Fisrt Search
+provarAlgoritmoDFS( MAPA, raiz, 10)
 
-dfs = DepthFirstSearch()
+#test algoritmo Kruskal, con algoritmo dfs
+provarAlgoritmoKrustal( MAPA, DepthFirstSearch, 10)
 
-print("inicio del algoritmo Depth Fisrt Search")
-print("\n\n")
-tiempoInicio = time.time()#inicio conteo del tiempo
-dfs.estaTotalmenteConectado( MAPA, semilla)
-tiempoFin = time.time()#fin del tiempo
-dfs.imprimirRecorrido()
-print("\n\n")
-print("\tTiempo del agloritmo (Depth Fisrt Search):")
-print("\t\tinicio : "+str(tiempoInicio)+"\n"
-    +"\t\tfin : "+str(tiempoFin)+"\n"
-    +"\t\tdiferencia : "+str(tiempoFin - tiempoInicio))
-
-print("\n\n")
-
-#test algoritmo Kruskal
-mspKrustal = Kruskal()
-print("inicio del algoritmo Kruskal")
-print("\n")
-tiempoInicio = time.time()#inicio conteo del tiempo
-grafoDeRutasMinimas = mspKrustal.getGrafoDeRutaMinima(MAPA)
-tiempoFin = time.time()#fin del tiempo
-print("\n\n")
-print("\tTiempo del agloritmo (Kruskal):")
-print("\t\tinicio : "+str(tiempoInicio)+"\n"
-    +"\t\tfin : "+str(tiempoFin)+"\n"
-    +"\t\tdiferencia : "+str(tiempoFin - tiempoInicio))
-
-print(grafoDeRutasMinimas)
-print("el costo total del grafo con las rutas minimas es : " + str(mspKrustal.getCostoTotalDeRutaMinima()))
+#test algoritmo Breadth Fisrt Search
+provarAlgoritmoBFS(MAPA, raiz, 10)
