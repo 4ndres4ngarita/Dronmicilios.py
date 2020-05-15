@@ -77,7 +77,7 @@ class grafo:
                 respuesta = SI_EXISTE_EL_ARISTA_EN_EL_GRAFO
         return respuesta
     
-    def buscarAristasConVertice(self, verticeBuscado:vertice):
+    def buscarAristasConVertice(self, verticeBuscado:vertice):# -> list<arista>
         aristasEncontradas = []
         for aristaIesima in self.aristasE:
             if aristaIesima.estaElVertice(verticeBuscado):
@@ -100,8 +100,8 @@ class grafo:
 
         aristasEncontradas = []
         for aristaIesima in self.aristasE:
-            estaElVerticeU = aristaIesima.estaElVertice( verticeU)
-            estaElVerticeV = aristaIesima.estaElVertice( verticeV)
+            estaElVerticeU:bool = aristaIesima.estaElVertice( verticeU)
+            estaElVerticeV:bool = aristaIesima.estaElVertice( verticeV)
             if estaElVerticeU and estaElVerticeV:
                 aristasEncontradas.append(aristaIesima)
                 break

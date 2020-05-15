@@ -73,8 +73,12 @@ class Kruskal(IAlgoritmoDeExpansion):
         self.__grafoDeRutaMinima.añadirArista( aristaNueva)
     
     def calcularCostoTotal(self):
-        pass
-    
+        costoTotal = 0
+        for cadaArista in self.__grafoDeRutaMinima.aristasE:
+            cadaArista:arista
+            costoTotal += cadaArista.costo
+        return costoTotal
+  
     def __estaUsado(self, verticeBuscado:vertice):
         respuesta = False
         for i in self.__grafoDeRutaMinima.verticesV:

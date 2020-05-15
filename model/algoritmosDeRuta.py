@@ -1,40 +1,70 @@
-from model.vertice import *
-from model.arista import *
-from model.grafo import *
+import sys 
 
-class IAlgoritmoDeRuta:
-    def getGrafoDeRutaMinimaPara(self, vertice:vertice, grafoBase:grafo):
-        pass
-    def getRutaPara(self, inicio:vertice, fin:vertice, grafoBase:grafo):
-        pass
+class Graph(): 
+  
+    def __init__(self, vertices): 
+        self.V = vertices 
+        self.graph = [[0 for column in range(vertices)]  
+                    for row in range(vertices)] 
+  
+    def imprimirSolucion(self, distancias): 
+        print("Tabla de rutas")
 
-class Dijkstra(IAlgoritmoDeRuta):
-    def __init__(self):
-        super().__init__()
-        self.verticeRaiz:vertice = None
-        self.direcciones:list = []
-        self.grafoBase:grafo = None
+        nombresDeVertices = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T']
 
-    def getGrafoDeRutaMinimaPara(self, vertice:vertice, grafoBase:grafo):
-        verticesParaVisitar = grafoBase.verticesV
-        for verticeIesimo in grafoBase.verticesV:
-            verticeIesimo:vertice
-            distancias[verticeIesimo.codigo] = 0.0
-        
+        for node in range(self.V): 
+            print(nombresDeVertices[node], "\t", distancias[node] )
+  
+    def minimaDistancia(self, distancias, sptSet): 
 
-        while verticesParaVisitar != []:
-            break
+        minimoCosto = sys.maxsize
+ 
+        for v in range(self.V): 
+            if distancias[v] < minimoCosto and sptSet[v] == False: 
+                minimoCosto = distancias[v] 
+                minimoCosto_index = v 
+  
+        return minimoCosto_index
 
-    def getCostoHasta(self, destino:str):
-        costoTotal = 0
-        destino = self.direcciones
-    def __cargarDirecciones(self):
-        for verticeIesimo in self.grafoBase.verticesV:
-            verticeIesimo:vertice
-            if verticeIesimo != self.verticeRaiz:
-                nuevaDireccion = {
-                    'destino':verticeIesimo.codigo,
-                    'costo':0.0,
-                    'predecesor':''
-                }
-                self.direcciones.append( nuevaDireccion)
+    def dijkstra(self, src): 
+  
+        distancias = [sys.maxsize] * self.V 
+        distancias[src] = 0
+        sptSet = [False] * self.V 
+  
+        for cout in range(self.V):
+            u = self.minimaDistancia(distancias, sptSet)
+            sptSet[u] = True
+            for v in range(self.V): 
+                if self.graph[u][v] > 0 and sptSet[v] == False and (
+                distancias[v] > distancias[u] + self.graph[u][v]): 
+                        distancias[v] = distancias[u] + self.graph[u][v] 
+  
+        self.imprimirSolucion(distancias) 
+  
+
+grafoCrudo = Graph(20) 
+grafoCrudo.graph = [
+    [0,1700,316.22776601683796,0,0,538.5164807134504,1166.19037896906,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [1700,0,0,824.6211251235321,412.31056256176606,0,921.9544457292888,707.1067811865476,0,0,0,0,0,0,0,0,0,0,0,0],
+    [316.22776601683796,0,0,608.276253029822,0,412.31056256176606,412.31056256176606,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    [0,824.6211251235321,608.276253029822,0,728.0109889280518,761.5773105863908,412.31056256176606,1029.5630140987,0,707.1067811865476,894.4271909999159,0,0,0,0,0,0,0,0,0],
+    [0,412.31056256176606,0,728.0109889280518,0,0,632.4555320336759,360.5551275463989,538.5164807134504,0,0,0,0,0,0,0,0,0,0,0],
+    [538.5164807134504,0,412.31056256176606,761.5773105863908,0,0,0,0,0,0,583.09518948453,707.1067811865476,0,0,0,0,0,0,1431.7821063276353,0],
+    [1166.19037896906,921.9544457292888,412.31056256176606,412.31056256176606,632.4555320336759,0,0,806.2257748298549,500,360.5551275463989,0,0,0,0,0,0,0,0,0,0],
+    [0,707.1067811865476,0,1029.5630140987,360.5551275463989,0,806.2257748298549,0,447.21359549995793,0,0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,538.5164807134504,0,500,447.21359549995793,0,0,0,0,583.09518948453,500,600,0,0,0,0,0],
+    [0,0,0,707.1067811865476,0,0,360.5551275463989,0,0,0,316.22776601683796,0,316.22776601683796,984.8857801796105,848.5281374238571,0,707.1067811865476,0,0,0],
+    [0,0,0,894.4271909999159,0,583.09518948453,0,0,0,316.22776601683796,0,282.842712474619,0,0,0,0,632.4555320336759,0,0,0],
+    [0,0,0,0,0,707.1067811865476,0,0,0,0,282.842712474619,0,600,0,1140.175425099138,412.31056256176606,565.685424949238,0,0,0],
+    [0,0,0,0,0,0,0,0,583.09518948453,316.22776601683796,0,600,0,0,0,806.2257748298549,447.21359549995793,600,0,0],
+    [0,0,0,0,0,0,0,0,500,984.8857801796105,0,0,0,0,360.5551275463989,0,0,0,0,608.276253029822],
+    [0,0,0,0,0,0,0,0,600,848.5281374238571,0,1140.175425099138,0,360.5551275463989,0,0,707.1067811865476,583.09518948453,0,565.685424949238],
+    [0,0,0,0,0,0,0,0,0,0,0,412.31056256176606,806.2257748298549,0,0,0,500,0,424.26406871192853,0],
+    [0,0,0,0,0,0,0,0,0,707.1067811865476,632.4555320336759,565.685424949238,447.21359549995793,0,707.1067811865476,500,0,0,854.4003745317531,0],
+    [0,0,0,0,0,0,0,0,0,0,0,0,600,0,583.09518948453,0,0,0,1004.987562112089,905.5385138137417],
+    [0,0,0,0,0,1431.7821063276353,0,0,0,0,0,0,0,0,0,424.26406871192853,854.4003745317531,1004.987562112089,0,1900],
+    [0,0,0,0,0,0,0,0,0,0,0,0,0,608.276253029822,565.685424949238,0,0,905.5385138137417,1900,0 ]
+        ] 
+  
+grafoCrudo.dijkstra(9)

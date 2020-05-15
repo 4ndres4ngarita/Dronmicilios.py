@@ -160,3 +160,5 @@ RUTAS_AEREAS = [
 ]
 
 MAPA = grafo( CLIENTES, RUTAS_AEREAS)
+for e in MAPA.aristasE:
+    print(e)
