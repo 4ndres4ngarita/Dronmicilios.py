@@ -42,7 +42,7 @@ class DepthFirstSearch(IAlgoritmoDeExploracion):
             verticeVecino = aristaIesima.getVerticeVecino( verticeRaiz)
             if self.diccionarioDeVisitas[verticeVecino.codigo] == NO_VISITADO:
                 self.__visitar(verticeVecino, grafoBase)
-
+        self.ordenDeVerticesVisitados.append(verticeRaiz.codigo)
         self.diccionarioDeVisitas[verticeRaiz.codigo] = TOTALMENTE_VISITADO
 
     def estaTotalmenteConectado(self):
@@ -75,8 +75,14 @@ class DepthFirstSearch(IAlgoritmoDeExploracion):
         return respuesta
     
     def imprimirRecorrido(self):
+        totalDatos = len(self.ordenDeVerticesVisitados)/2
+        i = 0
         for verticeI in self.ordenDeVerticesVisitados:
-            print("vertice :" + verticeI + " parcialmente visitado.")
+            if i < totalDatos:
+                print("vertice :" + verticeI + " parcialmente visitado.")
+                i+=1
+            else:
+                print("vertice :" + verticeI + " Totalmente visitado.")
 
 class BreadthFirstSearch(IAlgoritmoDeExploracion):
     def __init__(self):

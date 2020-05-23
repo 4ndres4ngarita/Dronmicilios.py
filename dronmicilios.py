@@ -24,7 +24,8 @@ def provarAlgoritmoDFS( grafo, raiz, repeticiones:int):
         tiempoInicio = time.time()#inicio del cronometraje
 
         dfs.ejecutarArlgoritmo( grafo, raiz)
-
+        print(dfs.estaTotalmenteConectado())
+        dfs.imprimirRecorrido()
         tiempoFin = time.time()#fin del cronometraje
         tiempos.append( tiempoFin-tiempoInicio)
     print("prueba completa tiempos totales:")

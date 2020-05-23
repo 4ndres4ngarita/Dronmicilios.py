@@ -5,11 +5,8 @@ DISTANCIA_ENTRE_ESQUINAS_EN_METROS = 100
 
 class esquina(vertice):
     def __init__(self, codigo='', calle=0.0, carrera =0.0):
-        super().__init__(codigo=codigo)
-        self.direccion = {
-            "calle": calle,
-            "carrera": carrera
-        }
+        super().__init__(codigo=codigo, calle=calle, carrera=carrera)
+        
 
 class rutaAerea(arista):
     def __init__(self, esquinaA:esquina, esquinaB:esquina):

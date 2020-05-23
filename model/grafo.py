@@ -1,6 +1,7 @@
 try:
     from model.vertice import *
     from model.arista import *
+    from model.vias import *
 except:
     #from vertice import *
     pass
@@ -22,7 +23,7 @@ class grafo:
         for nuevoVerticeIesimo in vertices:
             self.añadirVertice( nuevoVerticeIesimo)
 
-    def añadirVertice(self, verticeParaAgregar:vertice):
+    def añadirVertice(self, verticeParaAgregar:cliente):
         noEstaEnLaLista = not self.existeVertice( verticeParaAgregar.codigo)
         if noEstaEnLaLista:
             verticeNuevo = vertice()
@@ -77,7 +78,7 @@ class grafo:
                 respuesta = SI_EXISTE_EL_ARISTA_EN_EL_GRAFO
         return respuesta
     
-    def buscarAristasConVertice(self, verticeBuscado:vertice):# -> list<arista>
+    def buscarAristasConVertice(self, verticeBuscado):# -> list<arista>
         aristasEncontradas = []
         for aristaIesima in self.aristasE:
             if aristaIesima.estaElVertice(verticeBuscado):
