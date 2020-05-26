@@ -26,8 +26,7 @@ class grafo:
     def añadirVertice(self, verticeParaAgregar:cliente):
         noEstaEnLaLista = not self.existeVertice( verticeParaAgregar.codigo)
         if noEstaEnLaLista:
-            verticeNuevo = vertice()
-            verticeNuevo.copiarAtributos(verticeParaAgregar)
+            verticeNuevo = verticeParaAgregar.getClon()
             self.verticesV.append(verticeNuevo)
 
     def existeVertice(self, codigoVertice:str):
