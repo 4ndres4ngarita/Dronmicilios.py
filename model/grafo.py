@@ -5,12 +5,13 @@ try:
 except:
     #from vertice import *
     pass
-SI_EXISTE_EL_VERTICE_EN_EL_GRAFO = True
-NO_EXISTE_EL_VERTICE_EN_EL_GRAFO = False
-SI_EXISTE_EL_ARISTA_EN_EL_GRAFO = True
-NO_EXISTE_EL_ARISTA_EN_EL_GRAFO = False
-
 class grafo:
+
+    SI_EXISTE_EL_VERTICE_EN_EL_GRAFO = True
+    NO_EXISTE_EL_VERTICE_EN_EL_GRAFO = False
+    SI_EXISTE_EL_ARISTA_EN_EL_GRAFO = True
+    NO_EXISTE_EL_ARISTA_EN_EL_GRAFO = False
+
     def __init__(self, verticesV:list, aristasE:list):
         self.verticesV = []
         if len(verticesV) > 0:
@@ -30,10 +31,10 @@ class grafo:
             self.verticesV.append(verticeNuevo)
 
     def existeVertice(self, codigoVertice:str):
-        respuesta = NO_EXISTE_EL_VERTICE_EN_EL_GRAFO
+        respuesta = grafo.NO_EXISTE_EL_VERTICE_EN_EL_GRAFO
         for verticeIesimo in self.verticesV:
             if verticeIesimo.codigo == codigoVertice:
-                respuesta = SI_EXISTE_EL_VERTICE_EN_EL_GRAFO
+                respuesta = grafo.SI_EXISTE_EL_VERTICE_EN_EL_GRAFO
         return respuesta
     
     def añadirAristas(self, aristas:list):
@@ -71,10 +72,10 @@ class grafo:
         del codigoVerticeV
             
     def existeArista(self, arista):
-        respuesta = NO_EXISTE_EL_ARISTA_EN_EL_GRAFO
+        respuesta = grafo.NO_EXISTE_EL_ARISTA_EN_EL_GRAFO
         for aristaIesimo in self.aristasE:
             if aristaIesimo == arista:
-                respuesta = SI_EXISTE_EL_ARISTA_EN_EL_GRAFO
+                respuesta = grafo.SI_EXISTE_EL_ARISTA_EN_EL_GRAFO
         return respuesta
     
     def buscarAristasConVertice(self, verticeBuscado):# -> list<arista>
